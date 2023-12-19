@@ -1,8 +1,0 @@
-gui:
-  base_uri: http://localhost:8080
-  login_uri: http://localhost:8080/login
-  redirect_uri: http://localhost:8080/redirect
-  secret: jCT6pBEZAQDSDQSDQQSDQd
-  links:
-  - name: Home page
-    route: /
