@@ -21,7 +21,7 @@ class KubectlService(object):
         cmd.close()
         if outputAsJson:
             return json.loads(result)
-        return result
+        return result.split('\n')
 
     def get(self, klass):
         return self.exec(command = "get {}".format(klass), outputAsJson = True)
@@ -34,3 +34,20 @@ class KubectlService(object):
 
     def getWithNameInNamespace(self, klass, name, namespace):
         return self.exec(command = "get {} {} -n {}".format(klass, name, namespace), outputAsJson = True)
+
+    def getApiResources(self):
+        result = []
+        first = True
+        for line in self.exec(command = "api-resources"):
+            if first:
+                first = False
+                continue
+            if len(line[:34].strip()) > 0:
+                result.append({
+                    "name": line[:34].strip(),
+                    "shortnames": line[34:47].strip(),
+                    "apiversion":line[47:86].strip(),
+                    "namespaced":line[86:99].strip(),
+                    "kind": line[99:129].strip(),
+                })
+        return result

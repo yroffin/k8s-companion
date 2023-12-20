@@ -1,4 +1,7 @@
+import json
 from nicegui import app, ui
+import yaml
+from models.kubectl import KubectlService
 from utils.security import SecurityService
 from core.config import config
 from utils.message import MessageService
@@ -69,6 +72,7 @@ class StandardPage():
         self.left_side = ui.left_drawer(top_corner=True, bottom_corner=True)
         with self.left_side.style('background-color: #bdb7b7'):
             ui.link('namespaces','/namespaces')
+            ui.link('apiresources','/apiresources')
     
         self.session_dialog = ui.dialog()
         with self.session_dialog, ui.card():
@@ -107,3 +111,54 @@ class StandardPage():
             'avatar': avatar
         })
         self.chatArea.refresh()
+
+    # Template
+    def template(self, namespace = None, type = None, ext = None) -> None:
+        self.rows = []
+
+        for item in KubectlService().getWithNamespace(type, namespace)["items"]:
+            self.rows.append({
+                "apiVersion": item['apiVersion'],
+                "kind": item['kind'],
+                "name": item['metadata']['name'],
+                "creationTimestamp": item['metadata']['creationTimestamp'],
+                })
+
+        self.table = ui.table(columns=self.columns, rows=self.rows, row_key='name', pagination={'rowsPerPage': 50, 'sortBy': 'name'})
+        self.table.classes('w-full')
+
+        act = []
+        for key in ext:
+            act.append(key)
+            self.table.on(key, ext[key])
+
+        self.table.add_slot('body', r'''
+            <q-tr :props="props">
+                <q-td v-for="col in props.cols" :key="col.name" :props="props">
+                    {{ col.value }}
+                </q-td>
+                <q-td auto-width>
+                    <q-btn color="info" round dense
+                        @click="() => $parent.$emit('@0', props.row)"
+                        :icon="'search'" />
+                </q-td>
+                <q-td auto-width>
+                    <q-btn color="info" round dense
+                        @click="() => $parent.$emit('@1', props.row)"
+                        :icon="'search'" />
+                </q-td>
+                <q-td auto-width>
+                    <q-btn color="info" round dense
+                        @click="() => $parent.$emit('selectWorkload', props.row)"
+                        :icon="'view_in_ar'" />
+                </q-td>
+            </q-tr>
+        '''.replace("@0", act[0]).replace("@1", act[1]))
+
+    def markdownFromYaml(self, type, name, namespace) -> None:
+        if name:
+            ui.markdown("```yaml\n{}\n```".format(yaml.dump(KubectlService().getWithNameInNamespace(type, name, namespace))))
+
+    def markdownFromJson(self, type, name, namespace) -> None:
+        if name:
+            ui.markdown("```json\n{}\n```".format(json.dumps(KubectlService().getWithNameInNamespace(type, name, namespace), indent = 2)))

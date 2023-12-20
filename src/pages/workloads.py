@@ -29,48 +29,6 @@ class WorkloadsPage(StandardPage):
         self.job = None
         self.cronjob = None
 
-    def template(self, namespace = None, type = None, ext = None) -> None:
-        self.rows = []
-
-        for namespace in KubectlService().getWithNamespace(type, namespace)["items"]:
-            self.rows.append({
-                "apiVersion": namespace['apiVersion'],
-                "kind": namespace['kind'],
-                "name": namespace['metadata']['name'],
-                "creationTimestamp": namespace['metadata']['creationTimestamp'],
-                })
-
-        self.table = ui.table(columns=self.columns, rows=self.rows, row_key='name', pagination={'rowsPerPage': 50, 'sortBy': 'name'})
-        self.table.classes('w-full')
-
-        act = []
-        for key in ext:
-            act.append(key)
-            self.table.on(key, ext[key])
-
-        self.table.add_slot('body', r'''
-            <q-tr :props="props">
-                <q-td v-for="col in props.cols" :key="col.name" :props="props">
-                    {{ col.value }}
-                </q-td>
-                <q-td auto-width>
-                    <q-btn color="info" round dense
-                        @click="() => $parent.$emit('@0', props.row)"
-                        :icon="'search'" />
-                </q-td>
-                <q-td auto-width>
-                    <q-btn color="info" round dense
-                        @click="() => $parent.$emit('@1', props.row)"
-                        :icon="'search'" />
-                </q-td>
-                <q-td auto-width>
-                    <q-btn color="info" round dense
-                        @click="() => $parent.$emit('selectWorkload', props.row)"
-                        :icon="'view_in_ar'" />
-                </q-td>
-            </q-tr>
-        '''.replace("@0", act[0]).replace("@1", act[1]))
-
     @ui.refreshable
     def pods(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "pods", ext = {
@@ -112,15 +70,6 @@ class WorkloadsPage(StandardPage):
             'selectCronjobAsJson': self.selectCronjobAsJson,
             'selectCronjobAsYaml': self.selectCronjobAsYaml,
         })
-
-    def markdownFromYaml(self, type, name, namespace) -> None:
-        if name:
-            ui.markdown("```yaml\n{}\n```".format(yaml.dump(KubectlService().getWithNameInNamespace(type, name, namespace))))
-
-    def markdownFromJson(self, type, name, namespace) -> None:
-        if name:
-            print(type, name, namespace)
-            ui.markdown("```json\n{}\n```".format(json.dumps(KubectlService().getWithNameInNamespace(type, name, namespace), indent = 2)))
 
     # pods
         
