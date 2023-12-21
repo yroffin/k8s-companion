@@ -32,164 +32,164 @@ class WorkloadsPage(StandardPage):
     @ui.refreshable
     def pods(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "pods", ext = {
-            'selectPodAsJson': self.selectPodAsJson,
-            'selectPodAsYaml': self.selectPodAsYaml,
+            'selectPod_AsJson': self.selectPod_AsJson,
+            'selectPod_AsYaml': self.selectPod_AsYaml,
         })
 
     @ui.refreshable
     def deployments(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "deployments", ext = {
-            'selectDeploymentAsJson': self.selectDeploymentAsJson,
-            'selectDeploymentAsYaml': self.selectDeploymentAsYaml,
+            'selectDeployment_AsJson': self.selectDeployment_AsJson,
+            'selectDeployment_AsYaml': self.selectDeployment_AsYaml,
         })
 
     @ui.refreshable
     def daemonsets(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "daemonsets", ext = {
-            'selectDaemonsetAsJson': self.selectDaemonsetAsJson,
-            'selectDaemonsetAsYaml': self.selectDaemonsetAsYaml,
+            'selectDaemonset_AsJson': self.selectDaemonset_AsJson,
+            'selectDaemonset_AsYaml': self.selectDaemonset_AsYaml,
         })
 
     @ui.refreshable
     def statefulsets(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "statefulsets", ext = {
-            'selectStatefulsetAsJson': self.selectStatefulsetAsJson,
-            'selectStatefulsetAsYaml': self.selectStatefulsetAsYaml,
+            'selectStatefulset_AsJson': self.selectStatefulset_AsJson,
+            'selectStatefulset_AsYaml': self.selectStatefulset_AsYaml,
         })
 
     @ui.refreshable
     def jobs(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "jobs", ext = {
-            'selectJobAsJson': self.selectJobAsJson,
-            'selectJobAsYaml': self.selectJobAsYaml,
+            'selectJob_AsJson': self.selectJob_AsJson,
+            'selectJob_AsYaml': self.selectJob_AsYaml,
         })
 
     @ui.refreshable
     def cronJobs(self, namespace = None) -> None:
         self.template(namespace = namespace, type = "cronJobs", ext = {
-            'selectCronjobAsJson': self.selectCronjobAsJson,
-            'selectCronjobAsYaml': self.selectCronjobAsYaml,
+            'selectCronjob_AsJson': self.selectCronjob_AsJson,
+            'selectCronjob_AsYaml': self.selectCronjob_AsYaml,
         })
 
     # pods
         
     @ui.refreshable
-    def podAsYaml(self) -> None:
+    def pod_AsYaml(self) -> None:
         self.markdownFromYaml("pods", self.pod, self.namespace)
 
     @ui.refreshable
-    def podAsJson(self) -> None:
+    def pod_AsJson(self) -> None:
         self.markdownFromJson("pods", self.pod, self.namespace)
 
-    def selectPodAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectPod_AsJson(self, e: events.GenericEventArguments) -> None:
         self.pod = e.args['name']
-        self.podAsJson.refresh()
-        self.dialog_pod_json.open()
+        self.pod_AsJson.refresh()
+        self.pod_DlgAsJson.open()
 
-    def selectPodAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectPod_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.pod = e.args['name']
-        self.podAsYaml.refresh()
-        self.dialog_pod_yaml.open()
+        self.pod_AsYaml.refresh()
+        self.pod_DlgAsYaml.open()
 
     # deployments
 
     @ui.refreshable
-    def deploymentAsYaml(self) -> None:
+    def deployment_AsYaml(self) -> None:
         self.markdownFromYaml("deployments", self.deployment, self.namespace)
 
     @ui.refreshable
-    def deploymentAsJson(self) -> None:
+    def deployment_AsJson(self) -> None:
         self.markdownFromJson("deployments", self.deployment, self.namespace)
 
-    def selectDeploymentAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectDeployment_AsJson(self, e: events.GenericEventArguments) -> None:
         self.deployment = e.args['name']
-        self.deploymentAsJson.refresh()
-        self.dialog_deployment_json.open()
+        self.deployment_AsJson.refresh()
+        self.deployment_DlgAsJson.open()
 
-    def selectDeploymentAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectDeployment_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.deployment = e.args['name']
-        self.deploymentAsYaml.refresh()
-        self.dialog_deployment_yaml.open()
+        self.deployment_AsYaml.refresh()
+        self.deployment_DlgAsYaml.open()
 
     # daemonsets
 
     @ui.refreshable
-    def daemonsetAsYaml(self) -> None:
+    def daemonset_AsYaml(self) -> None:
         self.markdownFromYaml("daemonsets", self.daemonset, self.namespace)
 
     @ui.refreshable
-    def daemonsetAsJson(self) -> None:
+    def daemonset_AsJson(self) -> None:
         self.markdownFromJson("daemonsets", self.daemonset, self.namespace)
 
-    def selectDaemonsetAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectDaemonset_AsJson(self, e: events.GenericEventArguments) -> None:
         self.daemonset = e.args['name']
-        self.daemonsetAsJson.refresh()
-        self.dialog_daemonset_json.open()
+        self.daemonset_AsJson.refresh()
+        self.daemonset_DlgAsJson.open()
 
-    def selectDaemonsetAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectDaemonset_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.daemonset = e.args['name']
-        self.daemonsetAsYaml.refresh()
-        self.dialog_daemonset_yaml.open()
+        self.daemonset_AsYaml.refresh()
+        self.daemonset_DlgAsYaml.open()
 
     # statefulsets
 
     @ui.refreshable
-    def statefulsetAsYaml(self) -> None:
+    def statefulset_AsYaml(self) -> None:
         self.markdownFromYaml("statefulsets", self.statefulset, self.namespace)
 
     @ui.refreshable
-    def statefulsetAsJson(self) -> None:
+    def statefulset_AsJson(self) -> None:
         self.markdownFromJson("statefulsets", self.statefulset, self.namespace)
 
-    def selectStatefulsetAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectStatefulset_AsJson(self, e: events.GenericEventArguments) -> None:
         self.statefulset = e.args['name']
-        self.statefulsetAsJson.refresh()
-        self.dialog_statefulset_json.open()
+        self.statefulset_AsJson.refresh()
+        self.statefulset_DlgAsJson.open()
 
-    def selectStatefulsetAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectStatefulset_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.statefulset = e.args['name']
-        self.statefulsetAsYaml.refresh()
-        self.dialog_statefulset_yaml.open()
+        self.statefulset_AsYaml.refresh()
+        self.statefulset_DlgAsYaml.open()
 
     # jobs
 
     @ui.refreshable
-    def jobAsYaml(self) -> None:
+    def job_AsYaml(self) -> None:
         self.markdownFromYaml("jobs", self.job, self.namespace)
 
     @ui.refreshable
-    def jobAsJson(self) -> None:
+    def job_AsJson(self) -> None:
         self.markdownFromJson("jobs", self.job, self.namespace)
 
-    def selectJobAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectJob_AsJson(self, e: events.GenericEventArguments) -> None:
         self.job = e.args['name']
-        self.jobAsJson.refresh()
-        self.dialog_job_json.open()
+        self.job_AsJson.refresh()
+        self.job_DlgAsJson.open()
 
-    def selectJobAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectJob_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.job = e.args['name']
-        self.jobAsYaml.refresh()
-        self.dialog_job_yaml.open()
+        self.job_AsYaml.refresh()
+        self.job_DlgAsYaml.open()
 
     # cronjobs
 
     @ui.refreshable
-    def cronjobAsYaml(self) -> None:
+    def cronjob_AsYaml(self) -> None:
         self.markdownFromYaml("cronjobs", self.cronjob, self.namespace)
 
     @ui.refreshable
-    def cronjobAsJson(self) -> None:
+    def cronjob_AsJson(self) -> None:
         self.markdownFromJson("cronjobs", self.cronjob, self.namespace)
 
-    def selectCronjobAsJson(self, e: events.GenericEventArguments) -> None:
+    def selectCronjob_AsJson(self, e: events.GenericEventArguments) -> None:
         self.cronjob = e.args['name']
-        self.cronjobAsJson.refresh()
-        self.dialog_cronjob_json.open()
+        self.cronjob_AsJson.refresh()
+        self.cronjob_DlgAsJson.open()
 
-    def selectCronjobAsYaml(self, e: events.GenericEventArguments) -> None:
+    def selectCronjob_AsYaml(self, e: events.GenericEventArguments) -> None:
         self.cronjob = e.args['name']
-        self.cronjobAsYaml.refresh()
-        self.dialog_cronjob_yaml.open()
+        self.cronjob_AsYaml.refresh()
+        self.cronjob_DlgAsYaml.open()
 
     def build(self, request, namespace):
         self.namespace = namespace
@@ -221,58 +221,58 @@ class WorkloadsPage(StandardPage):
                         self.cronJobs(namespace = self.namespace)
 
                 # pods
-                self.dialog_pod_json = ui.dialog()
-                with self.dialog_pod_json, ui.card():
-                    self.podAsJson()
+                self.pod_DlgAsJson = ui.dialog()
+                with self.pod_DlgAsJson, ui.card():
+                    self.pod_AsJson()
 
-                self.dialog_pod_yaml = ui.dialog()
-                with self.dialog_pod_yaml, ui.card():
-                    self.podAsYaml()
+                self.pod_DlgAsYaml = ui.dialog()
+                with self.pod_DlgAsYaml, ui.card():
+                    self.pod_AsYaml()
 
                 # deployments
-                self.dialog_deployment_json = ui.dialog()
-                with self.dialog_deployment_json, ui.card():
-                    self.deploymentAsJson()
+                self.deployment_DlgAsJson = ui.dialog()
+                with self.deployment_DlgAsJson, ui.card():
+                    self.deployment_AsJson()
 
-                self.dialog_deployment_yaml = ui.dialog()
-                with self.dialog_deployment_yaml, ui.card():
-                    self.deploymentAsYaml()
+                self.deployment_DlgAsYaml = ui.dialog()
+                with self.deployment_DlgAsYaml, ui.card():
+                    self.deployment_AsYaml()
 
                 # daemonsets
-                self.dialog_daemonset_json = ui.dialog()
-                with self.dialog_daemonset_json, ui.card():
-                    self.daemonsetAsJson()
+                self.daemonset_DlgAsJson = ui.dialog()
+                with self.daemonset_DlgAsJson, ui.card():
+                    self.daemonset_AsJson()
 
-                self.dialog_daemonset_yaml = ui.dialog()
-                with self.dialog_daemonset_yaml, ui.card():
-                    self.daemonsetAsYaml()
+                self.daemonset_DlgAsYaml = ui.dialog()
+                with self.daemonset_DlgAsYaml, ui.card():
+                    self.daemonset_AsYaml()
 
                 # statefulsets
-                self.dialog_statefulset_json = ui.dialog()
-                with self.dialog_statefulset_json, ui.card():
-                    self.statefulsetAsJson()
+                self.statefulset_DlgAsJson = ui.dialog()
+                with self.statefulset_DlgAsJson, ui.card():
+                    self.statefulset_AsJson()
 
-                self.dialog_statefulset_yaml = ui.dialog()
-                with self.dialog_statefulset_yaml, ui.card():
-                    self.statefulsetAsYaml()
+                self.statefulset_DlgAsYaml = ui.dialog()
+                with self.statefulset_DlgAsYaml, ui.card():
+                    self.statefulset_AsYaml()
 
                 # jobs
-                self.dialog_job_json = ui.dialog()
-                with self.dialog_job_json, ui.card():
-                    self.jobAsJson()
+                self.job_DlgAsJson = ui.dialog()
+                with self.job_DlgAsJson, ui.card():
+                    self.job_AsJson()
 
-                self.dialog_job_yaml = ui.dialog()
-                with self.dialog_job_yaml, ui.card():
-                    self.jobAsYaml()
+                self.job_DlgAsYaml = ui.dialog()
+                with self.job_DlgAsYaml, ui.card():
+                    self.job_AsYaml()
 
                 # cronJobs
-                self.dialog_cronjob_json = ui.dialog()
-                with self.dialog_cronjob_json, ui.card():
-                    self.cronjobAsJson()
+                self.cronjob_DlgAsJson = ui.dialog()
+                with self.cronjob_DlgAsJson, ui.card():
+                    self.cronjob_AsJson()
 
-                self.dialog_cronjob_yaml = ui.dialog()
-                with self.dialog_cronjob_yaml, ui.card():
-                    self.cronjobAsYaml()
+                self.cronjob_DlgAsYaml = ui.dialog()
+                with self.cronjob_DlgAsYaml, ui.card():
+                    self.cronjob_AsYaml()
 
 @ui.page('/namespaces/{namespace}/workload', dark=True)
 def workloadsPage(request: Request = None, namespace: str = None):
