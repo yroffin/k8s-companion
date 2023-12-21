@@ -147,11 +147,6 @@ class StandardPage():
                         @click="() => $parent.$emit('@1', props.row)"
                         :icon="'search'" />
                 </q-td>
-                <q-td auto-width>
-                    <q-btn color="info" round dense
-                        @click="() => $parent.$emit('selectWorkload', props.row)"
-                        :icon="'view_in_ar'" />
-                </q-td>
             </q-tr>
         '''.replace("@0", act[0]).replace("@1", act[1]))
 

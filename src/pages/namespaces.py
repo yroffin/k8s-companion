@@ -18,7 +18,8 @@ class NamespacesPage(StandardPage):
             {'name': 'Name', 'label': 'Name', 'field': 'name'},
             {'name': 'Creation', 'label': 'Creation', 'field': 'creationTimestamp'},
             {'label': 'Json'},
-            {'label': 'Wk.'},
+            {'label': 'Wrk'},
+            {'label': 'Svc'},
         ]
         self.rows = []
         self.namespace = None
@@ -54,11 +55,17 @@ class NamespacesPage(StandardPage):
                         @click="() => $parent.$emit('selectWorkload', props.row)"
                         :icon="'view_in_ar'" />
                 </q-td>
+                <q-td auto-width>
+                    <q-btn color="info" round dense
+                        @click="() => $parent.$emit('selectService', props.row)"
+                        :icon="'view_in_ar'" />
+                </q-td>
             </q-tr>
         ''')
 
         self.table.on('selectNamespace', self.selectNamespace)
         self.table.on('selectWorkload', self.selectWorkload)
+        self.table.on('selectService', self.selectService)
 
     @ui.refreshable
     def namespaceAsJson(self) -> None:
@@ -73,6 +80,9 @@ class NamespacesPage(StandardPage):
 
     def selectWorkload(self, e: events.GenericEventArguments) -> None:
         ui.open("/namespaces/{}/workload".format(e.args['name']))
+
+    def selectService(self, e: events.GenericEventArguments) -> None:
+        ui.open("/namespaces/{}/service".format(e.args['name']))
 
     def build(self, request):
         # Call inheritance to check roles

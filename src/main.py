@@ -7,6 +7,7 @@ from pages.main import MainPage
 from pages.graph import GraphPage
 from pages.namespaces import NamespacesPage
 from pages.workloads import WorkloadsPage
+from pages.services import ServicesPage
 from pages.apiresources import ApiResourcesPage
 from nicegui import app
 
